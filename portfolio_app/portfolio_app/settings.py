@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'forum',
     'resume',
-    'projects'
+    'projects',
 ]
 
 MEDIA_URL = '/media/'
