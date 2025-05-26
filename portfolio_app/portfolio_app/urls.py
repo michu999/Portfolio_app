@@ -21,13 +21,14 @@ from forum import views as forum_views
 from resume import views as resume_views
 from accounts import views as account_views
 from django.conf import settings
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', project_views.home, name='home'),
     path('projects/', include('projects.urls'), name='projects'),
     path('forum/', include('forum.urls'), name='forum'),
     path('resume/', include('resume.urls'), name='resume'),
-
     path('accounts/', include('allauth.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ]
