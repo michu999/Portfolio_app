@@ -1,7 +1,102 @@
 {% extends "base.html" %}
-{% load static %}
-
-{% block title %}My resume{% endblock %}
-
+{% block title %}Resume{% endblock %}
 {% block content %}
+
+<section class="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
+    <header class="mb-8 text-center">
+        <h1 class="text-3xl font-bold mb-2">Michał Goluch</h1>
+        <p class="text-gray-400">Software Developer</p>
+        <p class="text-gray-400">Email: mgoluch2020@gmail.com | Location: Lublin / Hybrid / Remote</p>
+    </header>
+
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Summary</h2>
+        <p class="text-gray-300">[A brief summary about yourself, your experience, and what you are looking for.]</p>
+    </section>
+
+    <!-- Experience -->
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Experience</h2>
+        <div class="mb-4">
+            <h3 class="font-bold mb-4 text-blue-500 text-2xl uppercase tracking-wider">Job title - company name</h3>
+            <span class="text-gray-400 text-sm">[Start Date - End Date]</span>
+            <ul class="list-disc list-inside text-gray-300 ml-4">
+                <li>[Responsibility or achievement 1]</li>
+                <li>[Responsibility or achievement 2]</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Projects</h2>
+        <div>
+            <h3 class="font-bold mb-4 text-blue-500 text-2xl uppercase tracking-wider">Project name</h3>
+            <p class="text-gray-300">[Short description of the project and your role.]</p>
+            <a href="#" class="text-blue-400 hover:underline">[GitHub / Live Link]</a>
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Education</h2>
+        <div>
+            <h3 class="font-bold mb-4 text-blue-500 text-2xl uppercase tracking-wider">School name</h3>
+            <span class="text-gray-400 text-sm">[Year]</span>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Skills</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="font-bold mb-4 text-blue-500 text-2xl uppercase tracking-wider">Tech Stack</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>Python</li>
+                    <li>Django / DRF</li>
+                    <li>HTML / CSS</li>
+                    <li>PostgreSQL / Oracle</li>
+                    <li>Linux</li>
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>Jira / Confluence</li>
+
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold mb-4 text-blue-500 text-2xl uppercase tracking-wider">Soft Skills</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>Communication</li>
+                    <li>Teamwork</li>
+                    <li>Problem-solving</li>
+                    <li>Creativity</li>
+                    <li>Adaptability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Languages -->
+    <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Languages</h2>
+        <ul class="list-disc list-inside text-gray-300 grid grid-cols-2 gap-x-8">
+            <li>Polish - C2 (Native)</li>
+            <li>English - C1</li>
+            <li>German - A1 (Still learning)</li>
+        </ul>
+    </section>
+
+    <!-- Hobbies -->
+    <section>
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Hobbies</h2>
+        <ul class="list-disc list-inside text-gray-300 grid grid-cols-2 gap-x-8">
+            <li>Cooking (Italian / Mexican)</li>
+            <li>Gaming (Especially Co-Op Games!)</li>
+            <li>Movies (Tarantino and Scorsese are the best)</li>
+            <li>History (Either WW2 period or the Roman Empire)</li>
+        </ul>
+    </section>
+
+</section>
 {% endblock content %}
