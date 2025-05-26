@@ -1,5 +1,23 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-
+<div class="text-center">
+    <h1 class="text-6xl font-bold mb-6">Feel free to ask questions about me on the forum</h1>
+    <div class="mb-8">
+        {% if posts %}
+            <ul class="space-y-4">
+                {% for post in posts %}
+                    <li class="bg-gray-800 p-4 rounded-lg text-left">
+                        <h2 class="text-4xl font-bold mb-2">{{ post.title }}</h2>
+                        <p class="mb-2">{{ post.content }}</p>
+                        <span class="text-xs text-gray-400">By {{ post.author }} on {{ post.created_at }}</span>
+                        <a href="{% url 'forum:forum' %}" class="inline-block mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded">Comment</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-400">No posts yet. Be the first to ask a question!</p>
+        {% endif %}
+    </div>
+    <a href="{% url 'forum:forum' %}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">New Post (PLACEHOLDER)</a>
+</div>
 {% endblock content %}

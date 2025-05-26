@@ -1,10 +1,8 @@
 from django.db import models
-from accounts.models import CustomUser
 # Create your models here.
 
 class Technology(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
     icon = models.ImageField(upload_to='technology_icons/', blank=True, null=True)
 
     def __str__(self):
@@ -21,9 +19,8 @@ class Project(models.Model):
     image = models.ImageField(upload_to='project_images/', blank=True, null=True)
     live_url = models.URLField(blank=True, null=True)
     github_url = models.URLField(blank=True, null=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='projects')
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    technologies = models.ManyToManyField(Technology, related_name='projects', blank=True)
 
     def __str__(self):
         return self.title
