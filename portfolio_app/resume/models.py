@@ -44,7 +44,7 @@ class Skill(models.Model):
     ]
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='lang')
-    proficiency = models.IntegerField(default=1)  # 1 to 5 scale
+
 
     def __str__(self):
         return f"{self.name}"

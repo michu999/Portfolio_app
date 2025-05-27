@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load allauth %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10 bg-gray-800 p-8 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold text-center text-blue-400 mb-6">{% trans "Sign Up" %}</h1>
+    <form method="post" action="{% url 'account_signup' %}" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Username field -->
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" class="block text-gray-300 mb-2">{{ form.username.label }}</label>
+            {% render_field form.username class="w-full p-2 bg-gray-700 border border-gray-600 rounded" style="color: #000000;" %}
+            {% if form.username.errors %}
+            <div class="text-red-400 text-sm mt-1">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Email field -->
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" class="block text-gray-300 mb-2">{{ form.email.label }}</label>
+            {% render_field form.email class="w-full p-2 bg-gray-700 border border-gray-600 rounded" style="color: #000000;" %}
+            {% if form.email.errors %}
+            <div class="text-red-400 text-sm mt-1">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Password field -->
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}" class="block text-gray-300 mb-2">{{ form.password1.label }}</label>
+            {% render_field form.password1 class="w-full p-2 bg-gray-700 border border-gray-600 rounded" style="color: #000000;" %}
+            {% if form.password1.errors %}
+            <div class="text-red-400 text-sm mt-1">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password field -->
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}" class="block text-gray-300 mb-2">{{ form.password2.label }}</label>
+            {% render_field form.password2 class="w-full p-2 bg-gray-700 border border-gray-600 rounded" style="color: #000000;" %}
+            {% if form.password2.errors %}
+            <div class="text-red-400 text-sm mt-1">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+        {% endif %}
+
+        <div class="text-center">
+            <p class="text-sm text-gray-400 mb-4">{% trans "Already have an account?" %} <a href="{% url 'account_login' %}" class="text-blue-400 hover:underline">{% trans "Sign In" %}</a></p>
+        </div>
+
+        <button type="submit"
+                class="w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-extrabold rounded-xl shadow-xl border-2 border-blue-300 text-lg transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 relative overflow-hidden">
+            <span class="relative z-10">{% trans "Sign Up" %}</span>
+            <div class="absolute inset-0 bg-white opacity-10 animate-pulse"></div>
+        </button>
+    </form>
+</div>
+{% endblock content %}

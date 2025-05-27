@@ -42,18 +42,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #ALLAUTH STUFF
+    'accounts',
+    'forum',
+    'resume',
+    'projects',
+    # Allauth and its dependencies
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
+    # Widget tweaks
+    'widget_tweaks',
+    # Tailwind CSS
     'tailwind',
     'theme',
-    'accounts',
-    'forum',
-    'resume',
-    'projects',
 ]
 
 # Allauth configuration
@@ -159,7 +162,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "theme" / "static",
+    BASE_DIR / 'portfolio_app/theme/static',
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -167,3 +170,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
