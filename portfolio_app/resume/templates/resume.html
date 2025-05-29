@@ -4,55 +4,54 @@
 
 <section class="w-full bg-gray-800 rounded-lg shadow-lg p-8">
     <header class="mb-8 text-center">
-        <h1 class="text-3xl font-bold mb-2">Michał Goluch</h1>
-        <p class="text-gray-400">Software Developer</p>
-        <p class="text-gray-400">Email: mgoluch2020@gmail.com | Location: Lublin / Hybrid / Remote</p>
+        <h1 class="text-3xl font-bold mb-2">{{contact_info.name}}</h1>
+        <p class="text-gray-400">{{contact_info.position}}</p>
+        <p class="text-gray-400">Email: {{contact_info.email}} | Location: {{contact_info.location}}</p>
     </header>
 
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Summary</h2>
-        <p class="text-gray-300">👋 Hey there!
-
-            I'm a junior backend developer with a passion for building clean, functional web applications. I mainly work
-            with Python and Django, but I'm no stranger to PostgreSQL, HTML, JavaScript, and Tailwind CSS.
-
-            Right now, I'm working on this portfolio to showcase what I can do — including forum features, project
-            pages, and a custom resume section. I enjoy solving real problems with code, learning new tools, and
-            collaborating with people who care about what they build.
-
-            I'm currently looking for a junior Python/Django developer position where I can grow my skills, contribute
-            to meaningful projects, and learn from experienced developers.</p>
+        <p class="text-gray-300">{{summary.text}}</p>
     </section>
 
     <!-- Experience -->
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Experience</h2>
+        {% for exp in experience %}
         <div class="mb-4">
-            <h3 class="font-bold mb-4 text-2xl tracking-wider">Python Programming Internship - NeuroN Foundation</h3>
-            <span class="text-gray-400 text-sm">02/2024 - 09/2024</span>
-            <p class="font-bold mb-4 text-blue-300 text-2xl tracking-wider">Python, Django, SQL, Docker, Linux</p>
-            <ul class="list-disc list-inside text-gray-300 ml-4">
-                <li>Developed integrations between Slack apps and custom Python bots to support internal automation and collaboration.</li>
-                <li>Created a Django-based CRUD web application with Slack authentication, enabling users to manage profiles with skills, locations, and team assignments.</li>
-                <li>Utilized and designed RESTful APIs and implemented webhooks for dynamic user search and filtering by skillsets.</li>
-                <li>Containerized the application with Docker and contributed to deployment on Microsoft Azure, collaborating closely with the system administrator.</li>
-                <li>Gained hands-on experience with CI/CD pipelines using GitHub Actions by assisting and learning from the team lead responsible for the setup.</li>
+            <h3 class="font-bold mb-4 text-2xl tracking-wider">{{exp.position}} - {{exp.company}}</h3>
+            <span class="text-gray-400 text-sm">{{exp.start_date}} - {{exp.end_date}}</span>
+            <p class="font-bold mb-4 text-blue-300 text-2xl tracking-wider">
+                {% for skill in exp.skills_used.all %}
+                {{ skill.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <ul class="list-disc list-outside text-gray-300 ml-6">
+                {% for line in exp.description.splitlines %}
+                {% if line %}
+                <li>{{ line }}</li>
+                {% endif %}
+                {% endfor %}
             </ul>
         </div>
+        {% endfor %}
     </section>
 
     <!-- Projects -->
-    <section class="mb-8">
+<section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Projects</h2>
-        <div>
-            <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">My Portfolio App</h3>
-            <p class="text-gray-300">This is a full-featured personal portfolio web application built with Django and
-                styled using Tailwind CSS. The goal of the project is to present my skills, experience, and personal
-                projects in a clean, organized, and professional way to support my job applications as a junior
-                developer.</p>
-            <a href="https://github.com/michu999/Portfolio_app" class="text-2xl font-bold mb-4 text-blue-400">Github / </a>
-            <a href="https://github.com/michu999/Portfolio_app" class="text-2xl font-bold mb-4 text-blue-400">Live</a>
+        {% for project in projects %}
+        <div class="mb-6">
+            <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">{{project.title}}</h3>
+            <p class="text-gray-300 mb-2">{{project.description}}</p>
+            {% if project.github_url %}
+            <a href="{{project.github_url}}" class="text-xl font-bold text-blue-400 mr-4">GitHub</a>
+            {% endif %}
+            {% if project.live_url %}
+            <a href="{{project.live_url}}" class="text-xl font-bold text-blue-400">Live Demo</a>
+            {% endif %}
         </div>
+        {% endfor %}
     </section>
 
     <!-- Education -->
@@ -79,7 +78,7 @@
 
         <p><a href="https://grzyby-w-polsce-wnozigp.opendata.arcgis.com/" class="text-2xl font-bold mb-4 text-blue-400">One of the apps that I helped develop</a></p>
     </section>
-
+g
     <!-- Skills -->
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Skills</h2>
