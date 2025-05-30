@@ -69,7 +69,7 @@ class Language(models.Model):
 
     class Meta:
         verbose_name_plural = 'Languages'
-        ordering = ['name']
+        ordering = ['-proficiency', 'name']
 
 class Summary(models.Model):
     text = models.TextField(blank=True, null=True)
@@ -102,3 +102,12 @@ class ProjectSection(models.Model):
     class Meta:
         verbose_name_plural = 'Project Sections'
 
+class Hobby(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Hobbies'
+        ordering = ['name']

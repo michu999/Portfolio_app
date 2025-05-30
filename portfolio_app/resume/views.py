@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from resume.models import Education, Experience, Skill, RelevantCourse, Language, ProjectSection, ContactInfo, Summary
+from resume.models import Education, Experience, Skill, RelevantCourse, Language, ProjectSection, ContactInfo, Summary, Hobby
 from projects.models import Project
 
 def resume(request):
@@ -22,9 +22,10 @@ def resume(request):
         'relevant_course': RelevantCourse.objects.all(),
         'language': Language.objects.all(),
         'project_section': project_section,
-        'projects': projects,  # Add projects directly to the context
+        'projects': projects,
         'contact_info': ContactInfo.objects.first(),
         'summary': Summary.objects.first(),
+        'hobbies': Hobby.objects.all(),
     }
 
     return render(request, 'resume.html', context=context)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from resume.models import Experience, Education, Skill, RelevantCourse, Language, ProjectSection, ContactInfo, Summary
+from resume.models import Experience, Education, Skill, RelevantCourse, Language, ProjectSection, ContactInfo, Summary, Hobby
 
 # Register your models here.
 admin.site.register(Education)
@@ -10,3 +10,4 @@ admin.site.register(Language)
 admin.site.register(ProjectSection)
 admin.site.register(ContactInfo)
 admin.site.register(Summary)
+admin.site.register(Hobby)

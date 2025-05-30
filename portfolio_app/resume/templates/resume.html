@@ -21,15 +21,18 @@
         <div class="mb-4">
             <h3 class="font-bold mb-4 text-2xl tracking-wider">{{exp.position}} - {{exp.company}}</h3>
             <span class="text-gray-400 text-sm">{{exp.start_date}} - {{exp.end_date}}</span>
-            <p class="font-bold mb-4 text-blue-300 text-2xl tracking-wider">
-                {% for skill in exp.skills_used.all %}
-                {{ skill.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
+            <div class="ml-4 mt-2">
+                <p class="text-gray-300">Skills used:</p>
+                <ul class="list-disc list-inside text-gray-300 mt-2">
+                    {% for skill in exp.skills_used.all %}
+                    <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
             <ul class="list-disc list-outside text-gray-300 ml-6">
                 {% for line in exp.description.splitlines %}
                 {% if line %}
-                <li>{{ line }}</li>
+                <p>{{ line }}</p>
                 {% endif %}
                 {% endfor %}
             </ul>
@@ -38,11 +41,11 @@
     </section>
 
     <!-- Projects -->
-<section class="mb-8">
+    <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Projects</h2>
         {% for project in projects %}
         <div class="mb-6">
-            <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">{{project.title}}</h3>
+            <h3 class="font-bold mb-4 text-2xl tracking-wider">{{project.title}}</h3>
             <p class="text-gray-300 mb-2">{{project.description}}</p>
             {% if project.github_url %}
             <a href="{{project.github_url}}" class="text-xl font-bold text-blue-400 mr-4">GitHub</a>
@@ -57,54 +60,54 @@
     <!-- Education -->
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Education</h2>
-        <div>
-            <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">Geoinformatics, Bachelor’s |
-                University of Marie Curie-
-                Skłodowska</h3>
-            <span class="text-gray-400 text-sm">2024-2026 (expected)</span>
+        {% for edu in education %}
+        <div class="mb-6">
+            <h3 class="font-bold mb-4 text-2xl tracking-wider">{{ edu.field_of_study }} {{ edu.degree }} |
+                {{ edu.institution }}</h3>
+            <span class="text-gray-400 text-sm">{{ edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}{% if not edu.end_date %} (expected){% endif %}</span>
+
+            {% if edu.description %}
+            <div class="text-gray-300 ml-0 mt-2">
+                {{ edu.description|linebreaks }}
+            </div>
+            {% endif %}
+
+            {% if edu.relevant_courses.all %}
+            <div class="ml-4 mt-2">
+                <p class="text-gray-300">Relevant coursework:</p>
+                <ul class="list-disc list-inside text-gray-300 mt-2">
+                    {% for course in edu.relevant_courses.all %}
+                    <li>{{ course.course_name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
         </div>
-        <a class="text-gray-300 ml-4">During my studies, I focused on Python programming, algorithms, and practical
-            applications of IT in geospatial contexts. I completed coursework in relevant areas like:
-
-            <li>Web development with Django and DRF</li>
-            <li>Python & scripting</li>
-            <li>Data structures and algorithms</li>
-            <li>Java and Kotlin basics</li>
-            <li>SQL and relational databases</li>
-            <li>Mathematical analysis and linear algebra</li>
-
-            I also participated in the Geoinformatics Student Research Group, where I worked with members of other
-            research groups on GIS-related applications and provided technical support to fellow students.</a>
-
-        <p><a href="https://grzyby-w-polsce-wnozigp.opendata.arcgis.com/" class="text-2xl font-bold mb-4 text-blue-400">One of the apps that I helped develop</a></p>
+        {% endfor %}
     </section>
-g
+
     <!-- Skills -->
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Skills</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">Tech Stack</h3>
+                <h3 class="font-bold mb-4 text-2xl tracking-wider">Technical Skills</h3>
                 <ul class="list-disc list-inside text-gray-300">
-                    <li>Python</li>
-                    <li>Django / DRF</li>
-                    <li>HTML / CSS / Bootstrap / Tailwind</li>
-                    <li>Javascript</li>
-                    <li>PostgreSQL / Oracle</li>
-                    <li>Linux</li>
-                    <li>Docker</li>
-                    <li>Git</li>
-                    <li>Jira / Confluence</li>
+                    {% for skill in skill %}
+                    {% if skill.category == 'tech' %}
+                    <p>{{ skill.name }}</p>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
             <div>
-                <h3 class="font-bold mb-4 text-blue-500 text-2xl tracking-wider">Soft Skills</h3>
+                <h3 class="font-bold mb-4 text-2xl tracking-wider">Soft Skills</h3>
                 <ul class="list-disc list-inside text-gray-300">
-                    <li>Communication</li>
-                    <li>Teamwork</li>
-                    <li>Problem-solving</li>
-                    <li>Creativity</li>
-                    <li>Adaptability</li>
+                    {% for skill in skill %}
+                    {% if skill.category == 'soft' %}
+                    <p>{{ skill.name }}</p>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -114,9 +117,9 @@ g
     <section class="mb-8">
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Languages</h2>
         <ul class="list-disc list-inside text-gray-300 grid grid-cols-2 gap-x-8">
-            <li>Polish - C2 (Native)</li>
-            <li>English - C1</li>
-            <li>German - A1 (Still learning)</li>
+            {% for lang in language %}
+            <li>{{ lang.name }} - {{ lang.proficiency }}{% if lang.note %} ({{ lang.note }}){% endif %}</li>
+            {% endfor %}
         </ul>
     </section>
 
@@ -124,10 +127,9 @@ g
     <section>
         <h2 class="text-3xl font-bold mb-4 text-blue-400">Hobbies</h2>
         <ul class="list-disc list-inside text-gray-300 grid grid-cols-2 gap-x-8">
-            <li>Cooking (Italian / Mexican)</li>
-            <li>Gaming (Especially Co-Op Games!)</li>
-            <li>Movies (Tarantino and Scorsese are the best)</li>
-            <li>History (Either WW2 period or the Roman Empire)</li>
+            {% for hobby in hobbies %}
+            <li>{{ hobby.name }}{% if hobby.description %} ({{ hobby.description }}){% endif %}</li>
+            {% endfor %}
         </ul>
     </section>
 
