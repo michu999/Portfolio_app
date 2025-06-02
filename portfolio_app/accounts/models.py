@@ -30,3 +30,17 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+    def get_posts(self):
+        return self.posts.all()
+
+    def get_comments(self):
+        return self.comments.all()
+
+    def get_reactions(self):
+        return self.reactions.all()
+
+    @property
+    def profile_image_url(self):
+        if self.profile_picture:
+            return self.profile_picture.url
+        return static('images/default_profile.png')

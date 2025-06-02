@@ -35,7 +35,7 @@
                     </div>
                     {% if user == request.user %}
                     <div class="ml-auto">
-                        <a href="{% url 'accounts:edit_profile' %}"
+                        <a href="{% url 'accounts:edit_profile' username=user.username %}"
                            class="py-3 px-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-medium rounded-xl shadow-lg border-2 border-blue-300 text-sm transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
                             Edit Profile
                         </a>

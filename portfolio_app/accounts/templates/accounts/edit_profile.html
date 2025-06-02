@@ -18,7 +18,7 @@
                         <div class="w-32 h-32 mx-auto md:mx-0 overflow-hidden border-4 border-gray-700 shadow-lg mb-4">
                             {% if user.profile_picture %}
                             <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}"
-                                class="w-full h-full object-cover max-w-[300px] max-h-[300px]">
+                                 class=profile-picture-lg>
                             {% else %}
                             <div class="w-full h-full bg-gray-700 flex items-center justify-center text-3xl">
                                 {{ user.username.0|upper }}
@@ -28,11 +28,20 @@
 
                         <div class="form-field">
                             <label class="text-sm font-medium">Change Profile Picture</label>
-                            {{ form.profile_picture }}
+
+                            <!-- Split the form field to access components separately -->
+                            <input type="file" name="{{ form.profile_picture.name }}"
+                                   id="{{ form.profile_picture.auto_id }}"
+                                   class="form-control" {% if form.profile_picture.field.required %}required{% endif %}>
+
+                            <!-- Style the clear checkbox if there's an existing profile picture -->
                             {% if user.profile_picture %}
-                            <div class="flex items-center mt-2">
-                                <input type="checkbox" name="{{ form.profile_picture.name }}-clear" id="{{ form.profile_picture.auto_id }}_clear" class="clear-checkbox">
-                                <label for="{{ form.profile_picture.auto_id }}_clear" class="ml-2 text-sm inline-block">Clear</label>
+                            <div class="flex items-center mt-3">
+                                <input type="checkbox" name="{{ form.profile_picture.name }}-clear"
+                                       id="{{ form.profile_picture.auto_id }}_clear"
+                                       class="w-4 h-4 text-blue-500 rounded focus:ring-blue-400">
+                                <label for="{{ form.profile_picture.auto_id }}_clear"
+                                       class="ml-2 text-sm text-white font-medium">Remove current image</label>
                             </div>
                             {% endif %}
                         </div>
@@ -48,6 +57,12 @@
                     <div class="mb-6">
                         <h2 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Profile Details</h2>
                         <div class="space-y-5">
+                            <div class="space-y-5">
+                                <div class="form-field">
+                                    <label class="text-sm font-medium">Email</label>
+                                    {{ form.email }}
+                                </div>
+
                             <div class="form-field">
                                 <label class="text-sm font-medium">Bio</label>
                                 {{ form.bio }}
@@ -66,7 +81,7 @@
                             <span class="relative z-10">Save Changes</span>
                             <div class="absolute inset-0 bg-white opacity-10 animate-pulse"></div>
                         </button>
-                        <a href="{% url 'accounts:profile' %}"
+                        <a href="{% url 'accounts:profile'  username=user.username %}"
                            class="py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-xl shadow-lg border-2 border-gray-600 text-lg transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-500">
                             Cancel
                         </a>

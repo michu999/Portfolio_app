@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Forum</h1>
+
+    <div class="mb-8 flex justify-end">
+        <a href="{% url 'forum:add_post' %}"
+           class="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white px-6 py-2 rounded-lg text-lg font-semibold shadow-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            + New Post
+        </a>
+    </div>
+
+    {% if posts %}
+        <div class="space-y-4">
+            {% for post in posts %}
+                <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition duration-200">
+                    <!-- Post title with link to details -->
+                    <a href="{% url 'forum:post_detail' post.id %}" class="block mb-4">
+                        <h2 class="text-2xl font-bold mb-2">{{ post.title }}</h2>
+                        <div class="text-gray-300">
+                            {{ post.content|truncatechars:150 }}
+                        </div>
+                    </a>
+
+                    <!-- Author info and comment count in separate container -->
+                    <div class="flex justify-between items-center text-sm mt-4">
+                        <div class="flex items-center space-x-6">
+                            <!-- Author with profile link -->
+                            <a href="{% url 'accounts:profile' username=post.author.username %}"
+                               class="flex items-center group">
+                                {% if post.author.profile_picture %}
+                                <img
+                                    src="{{ post.author.profile_picture.url }}"
+                                    alt="{{ post.author.username }}"
+                                    class="profile-picture-sm mr-2"
+                                >
+                                {% else %}
+                                <div class="profile-picture-sm mr-2 bg-gray-700 flex items-center justify-center">
+                                    {{ post.author.username|slice:":1"|upper }}
+                                </div>
+                                {% endif %}
+                                <span class="text-blue-400 group-hover:underline">{{ post.author.username }}</span>
+                            </a>
+
+                            <!-- Date separated from username -->
+                            <span class="text-gray-400">on {{ post.created_at|date:"F j, Y" }}</span>
+                        </div>
+
+                        <!-- Comment count and link -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">{{ post.comment_set.count }} {{ post.comment_set.count|pluralize:"comment,comments" }}</span>
+                            <a href="{% url 'forum:post_detail' post.id %}"
+                               class="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-3 py-1 rounded-md text-sm font-medium transition duration-200">
+                                Comment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-gray-400">No posts yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

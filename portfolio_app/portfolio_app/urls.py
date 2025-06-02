@@ -22,13 +22,16 @@ from resume import views as resume_views
 from accounts import views as account_views
 from django.conf import settings
 from django.views.generic import TemplateView
-
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('projects/', include('projects.urls'), name='projects'),
     path('forum/', include('forum.urls'), name='forum'),
     path('resume/', include('resume.urls'), name='resume'),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('auth/', include('allauth.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

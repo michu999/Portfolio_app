@@ -7,10 +7,6 @@
             {% for project in projects %}
                 <li class="bg-gray-800 p-4 rounded-lg text-left">
                     <div class="flex items-center mb-4">
-                        {% if project.image %}
-                        <img src="{{ project.image.url }}" alt="{{ project.title }} image"
-                             class="w-24 h-24 object-cover rounded-lg mr-4">
-                        {% endif %}
                         <div>
                             <h2 class="text-4xl font-bold mb-2">{{ project.title }}</h2>
                             <p class="mb-2">{{ project.description }}</p>

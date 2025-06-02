@@ -29,6 +29,12 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.author.username} on {self.post.title}"
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        # Check if parent comment exists and belongs to a different post
+        if self.parent and self.parent.post != self.post:
+            raise ValidationError("Parent comment must belong to the same post")
+
     class Meta:
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'

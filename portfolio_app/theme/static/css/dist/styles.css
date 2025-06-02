@@ -1205,3 +1205,14 @@ video {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+.sidebar-icon {
+  width: 12px !important;
+  height: 12px !important;
+  min-width: 12px !important;
+  min-height: 12px !important;
+  max-width: 12px !important;
+  max-height: 12px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
