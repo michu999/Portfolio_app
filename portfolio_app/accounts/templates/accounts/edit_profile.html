@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gray-800 rounded-lg shadow-lg p-8 relative mt-8">
+        <h1 class="text-2xl font-bold mb-6">Edit Your Profile</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Left side - Profile Picture -->
+                <div class="md:w-1/3">
+                    <div class="sticky top-8">
+                        <div class="w-32 h-32 mx-auto md:mx-0 overflow-hidden border-4 border-gray-700 shadow-lg mb-4">
+                            {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}"
+                                class="w-full h-full object-cover max-w-[300px] max-h-[300px]">
+                            {% else %}
+                            <div class="w-full h-full bg-gray-700 flex items-center justify-center text-3xl">
+                                {{ user.username.0|upper }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field">
+                            <label class="text-sm font-medium">Change Profile Picture</label>
+                            {{ form.profile_picture }}
+                            {% if user.profile_picture %}
+                            <div class="flex items-center mt-2">
+                                <input type="checkbox" name="{{ form.profile_picture.name }}-clear" id="{{ form.profile_picture.auto_id }}_clear" class="clear-checkbox">
+                                <label for="{{ form.profile_picture.auto_id }}_clear" class="ml-2 text-sm inline-block">Clear</label>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <p class="mt-4 text-sm text-gray-400">
+                            Upload a square image for best results. Maximum file size: 5MB.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right side - Form Fields -->
+                <div class="md:w-2/3">
+                    <div class="mb-6">
+                        <h2 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Profile Details</h2>
+                        <div class="space-y-5">
+                            <div class="form-field">
+                                <label class="text-sm font-medium">Bio</label>
+                                {{ form.bio }}
+                            </div>
+
+                            <div class="form-field">
+                                <label class="text-sm font-medium">LinkedIn URL</label>
+                                {{ form.linkedin_url }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
+                        <button type="submit"
+                                class="py-3 px-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-extrabold rounded-xl shadow-xl border-2 border-blue-300 text-lg transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 relative overflow-hidden">
+                            <span class="relative z-10">Save Changes</span>
+                            <div class="absolute inset-0 bg-white opacity-10 animate-pulse"></div>
+                        </button>
+                        <a href="{% url 'accounts:profile' %}"
+                           class="py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-xl shadow-lg border-2 border-gray-600 text-lg transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-500">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Direct styling to force black text in form inputs */
+    input, textarea, select {
+        color: black !important;
+        background-color: white !important;
+        border-radius: 0.75rem !important;
+        padding: 0.75rem !important;
+        border: 2px solid #e2e8f0 !important;
+        width: 100% !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease-in-out !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+    }
+
+    input[type="checkbox"] {
+        width: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .clear-checkbox {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .clear-checkbox + label {
+        margin-bottom: 0 !important;
+        color: white !important;
+    }
+
+    textarea {
+        min-height: 120px !important;
+    }
+
+    input[type="file"] {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0.5rem 0 !important;
+        box-shadow: none !important;
+    }
+
+    input[type="file"]::file-selector-button {
+        color: white !important;
+        background: linear-gradient(to right, #3b82f6, #06b6d4) !important;
+        border: none !important;
+        border-radius: 0.5rem !important;
+        padding: 0.5rem 1rem !important;
+        margin-right: 1rem !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background: linear-gradient(to right, #2563eb, #0891b2) !important;
+        transform: scale(1.05) !important;
+    }
+
+    .form-field {
+        margin-bottom: 1.5rem !important;
+    }
+
+    label {
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+        font-weight: 500 !important;
+    }
+</style>
+{% endblock %}
