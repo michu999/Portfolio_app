@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Post details -->
+    <div class="bg-gray-800 rounded-lg p-6 mb-6">
+        <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
+        <div class="mb-6">{{ post.content }}</div>
+
+        <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-400">
+                Posted by {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
+            </div>
+
+            <!-- Reaction buttons for post -->
+            <div class="reaction-buttons" data-post-id="{{ post.id }}">
+                <button class="reaction-btn like-btn {% if user_reaction.reaction_type.name == 'Like' %}active{% endif %}"
+                        data-reaction-type="Like">
+                    👍 <span class="like-count">{{ like_count }}</span>
+                </button>
+                <button class="reaction-btn dislike-btn {% if user_reaction.reaction_type.name == 'Dislike' %}active{% endif %}"
+                        data-reaction-type="Dislike">
+                    👎 <span class="dislike-count">{{ dislike_count }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment form -->
+    {% if post and post.id %}
+    <div class="bg-gray-800 rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-bold mb-4">Leave a comment</h2>
+        <form method="post" action="{% url 'forum:add_comment' post.id %}" class="comment-form">
+            {% csrf_token %}
+            {{ comment_form.content }}
+            <button type="submit" class="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+                Submit Comment
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Comments list -->
+    <div class="comments-section">
+        <h2 class="text-xl font-bold mb-4">Comments ({{ post.comments.count }})</h2>
+
+        {% if post.comments.exists %}
+        <ul class="space-y-4">
+            {% for comment in comments %}
+            {% if not comment.parent %}  <!-- Only top-level comments -->
+            <li id="comment-{{ comment.id }}" class="comment-item bg-gray-800 rounded-lg p-4">
+                <!-- Comment content -->
+                <div class="flex items-start">
+                    <!-- Profile picture -->
+                    <div class="mr-3">
+                        {% if comment.author.profile_picture %}
+                        <img src="{{ comment.author.profile_picture.url }}" alt="{{ comment.author }}"
+                             class="w-10 h-10 rounded-full object-cover">
+                        {% else %}
+                        <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                            {{ comment.author.username.0|upper }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Comment text -->
+                    <div class="flex-1">
+                        <div class="font-medium">{{ comment.author.username }}</div>
+                        <div class="text-gray-300">{{ comment.content }}</div>
+                        <div class="text-xs text-gray-500 mt-1">{{ comment.created_at|date:"F j, Y" }}</div>
+
+                        <!-- Comment reactions -->
+                        <div class="reaction-buttons mt-2" data-comment-id="{{ comment.id }}">
+                            <button class="reaction-btn like-btn {% if comment.user_reaction.reaction_type.name == 'Like' %}active{% endif %}"
+                                    data-reaction-type="Like">
+                                👍 <span class="like-count">{{ comment.like_count }}</span>
+                            </button>
+                            <button class="reaction-btn dislike-btn {% if comment.user_reaction.reaction_type.name == 'Dislike' %}active{% endif %}"
+                                    data-reaction-type="Dislike">
+                                👎 <span class="dislike-count">{{ comment.dislike_count }}</span>
+                            </button>
+                        </div>
+
+                        <!-- Reply button -->
+                        <button class="reply-btn text-blue-400 hover:text-blue-500 text-sm mt-2">
+                            Reply
+                        </button>
+
+                        <!-- Reply form (hidden by default) -->
+                        <div class="reply-form hidden mt-3">
+                            <form method="post" action="{% url 'forum:add_reply' post.id comment.id %}">
+                                {% csrf_token %}
+                                <textarea name="content" rows="2"
+                                          class="bg-gray-700 text-white rounded-md p-2 w-full"
+                                          placeholder="Write a reply..."></textarea>
+                                <button type="submit"
+                                        class="mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 px-3 rounded">
+                                    Submit Reply
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Replies -->
+                        {% if comment.replies.exists %}
+                        <ul class="space-y-3 ml-8 mt-4 border-l-2 border-gray-700 pl-4">
+                            {% for reply in comment.replies.all %}
+                            <li id="comment-{{ reply.id }}" class="reply-item">
+                                <div class="flex items-start">
+                                    <!-- Profile picture -->
+                                    <div class="mr-2">
+                                        {% if reply.author.profile_picture %}
+                                        <img src="{{ reply.author.profile_picture.url }}" alt="{{ reply.author }}"
+                                             class="w-8 h-8 rounded-full object-cover">
+                                        {% else %}
+                                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-sm">
+                                            {{ reply.author.username.0|upper }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Reply text -->
+                                    <div class="flex-1">
+                                        <div class="font-medium text-sm">{{ reply.author.username }}</div>
+                                        <div class="text-gray-300 text-sm">{{ reply.content }}</div>
+                                        <div class="text-xs text-gray-500 mt-1">{{ reply.created_at|date:"F j, Y" }}
+                                        </div>
+
+                                        <!-- Reply reactions -->
+                                        <div class="reaction-buttons mt-1"
+                                             data-comment-id="{{ reply.id }}">
+                                            <button class="reaction-btn like-btn {% if reply.user_reaction.reaction_type.name == 'Like' %}active{% endif %}"
+                                                    data-reaction-type="Like">
+                                                👍 <span
+                                                    class="like-count">{{ reply.like_count }}</span>
+                                            </button>
+                                            <button class="reaction-btn dislike-btn {% if reply.user_reaction.reaction_type.name == 'Dislike' %}active{% endif %}"
+                                                    data-reaction-type="Dislike">
+                                                👎 <span class="dislike-count">{{ reply.dislike_count }}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-400">No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle reply button clicks
+        document.querySelectorAll('.reply-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const replyForm = this.nextElementSibling;
+                replyForm.classList.toggle('hidden');
+            });
+        });
+
+        // Handle reactions
+        document.querySelectorAll('.reaction-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const reactionType = this.getAttribute('data-reaction-type');
+                const postId = this.closest('.reaction-buttons').getAttribute('data-post-id');
+                const commentId = this.closest('.reaction-buttons').getAttribute('data-comment-id');
+
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append('reaction_type', reactionType);
+
+                if (postId) {
+                    formData.append('post_id', postId);
+                } else if (commentId) {
+                    formData.append('comment_id', commentId);
+                }
+
+                // Send AJAX request
+                fetch('{% url "forum:toggle_reaction" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const container = this.closest('.reaction-buttons');
+                            const likeBtn = container.querySelector('.like-btn');
+                            const dislikeBtn = container.querySelector('.dislike-btn');
+
+                            // Update counts
+                            container.querySelector('.like-count').textContent = data.like_count;
+                            container.querySelector('.dislike-count').textContent = data.dislike_count;
+
+                            // Update active states
+                            likeBtn.classList.remove('active');
+                            dislikeBtn.classList.remove('active');
+
+                            if (data.action !== 'removed') {
+                                if (data.reaction_type === 'Like') {
+                                    likeBtn.classList.add('active');
+                                } else {
+                                    dislikeBtn.classList.add('active');
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
+
+<style>
+    .reaction-btn {
+        @apply inline-flex items-center px-2 py-1 text-sm bg-gray-700 rounded mr-2;
+    }
+
+    .reaction-btn.active {
+        @apply bg-blue-600;
+    }
+
+    .reaction-btn:hover {
+        @apply bg-gray-600;
+    }
+
+    .reaction-btn.active:hover {
+        @apply bg-blue-700;
+    }
+</style>
+
+{% endblock %}
