@@ -1,4 +1,6 @@
 from .settings import *
+import importlib
+import sys
 
 DATABASES = {
     'default': {
@@ -6,6 +8,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+sys.path.insert(0, os.path.join(BASE_DIR, '..'))
+
 
 try:
     import accounts
