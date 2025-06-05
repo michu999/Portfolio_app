@@ -6,3 +6,4 @@ django-allauth
 django-tailwind
 django-browser-reload
 gunicorn
+django-widget-tweaks
