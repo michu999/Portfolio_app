@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+@layer components {
+  .django-form-field {
+    @apply text-gray-300 !important;
+  }
+}
