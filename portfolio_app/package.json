@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "npx tailwindcss -i ./theme/static/css/src/input.css -o ./theme/static/css/dist/styles.css",
+    "watch": "npx tailwindcss -i ./theme/static/css/src/input.css -o ./theme/static/css/dist/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0"
+  }
+}
