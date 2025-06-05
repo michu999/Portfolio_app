@@ -1,25 +1,17 @@
 {
-
-    "builds": [{
-
-        "src": "portfolio_app/wsgi.py",
-
-        "use": "@vercel/python",
-
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
-
-    }],
-
-    "routes": [
-
-        {
-
-            "src": "/(.*)",
-
-            "dest": "portfolio_app/wsgi.py"
-
-        }
-
-    ]
-
+  "builds": [{
+    "src": "django_portfolio_app/portfolio_app/wsgi.py",
+    "use": "@vercel/python",
+    "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
+  }],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "django_portfolio_app/portfolio_app/wsgi.py"
+    }
+  ]
 }
