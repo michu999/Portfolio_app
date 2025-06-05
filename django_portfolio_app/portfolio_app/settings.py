@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost',]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -165,7 +165,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'portfolio_app/theme/static',
+    BASE_DIR / 'django_portfolio_app/theme/static',
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 WHITENOISE_AUTOREFRESH = DEBUG
