@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = 'django-insecure-x1^$ly%6om&jsb61bqwnpr3gehb-#bp^*ql2p)h77e$z2$s%qc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -118,11 +118,11 @@ WSGI_APPLICATION = 'portfolio_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),  # Replace with the username you created
-        'PASSWORD': os.environ.get('DB_PASSWORD'),  # Replace with the password you set
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': 'portfolio_db',
+        'USER': 'portfolio_user',
+        'PASSWORD': 'J7p!F$rQ2@Km8xZ#',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -174,10 +174,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email backend configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
