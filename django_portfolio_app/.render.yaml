@@ -6,7 +6,7 @@ services:
       npm install
       npm run build
       python manage.py collectstatic --noinput
-    startCommand: bash ./start.sh
+    startCommand: ./start.sh
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: portfolio_app.settings
