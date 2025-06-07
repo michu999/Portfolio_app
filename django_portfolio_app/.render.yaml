@@ -6,9 +6,9 @@ services:
       npm install
       npm run build
       python manage.py collectstatic --noinput
-    startCommand: gunicorn django_portfolio_app.wsgi:application
+    startCommand: gunicorn portfolio_app.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: django_portfolio_app.settings
+        value: portfolio_app.settings
       - key: PYTHON_VERSION
         value: 3.11
