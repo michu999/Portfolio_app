@@ -167,7 +167,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'django_portfolio_app/theme/static',
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WHITENOISE_AUTOREFRESH = DEBUG
 WHITENOISE_USE_FINDERS = True
 
@@ -179,3 +178,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email backend configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Security settings for production
+if not DEBUG:
+    # Only allow your site
+    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+
+    # HTTPS enforcement
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Security headers
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
+    # Whitenoise support
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
