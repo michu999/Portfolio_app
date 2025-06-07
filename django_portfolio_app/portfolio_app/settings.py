@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_portfolio_app.accounts',
+    'accounts',
     'forum',
     'resume',
     'projects',
