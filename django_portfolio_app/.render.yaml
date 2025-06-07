@@ -6,7 +6,7 @@ services:
       npm install
       npm run build
       python manage.py collectstatic --noinput
-    startCommand: gunicorn portfolio_app.wsgi:application
+    startCommand: bash ./start.sh
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: portfolio_app.settings
