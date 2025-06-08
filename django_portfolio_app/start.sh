@@ -1,6 +1,7 @@
 #!/bin/bash
-cd /usr/local/Python/Projects/portfolio_app
 
-export PYTHONPATH=$PYTHONPATH:/usr/local/Python/Projects/portfolio_app/django_portfolio_app
+# Set the Python path to include your project
+export PYTHONPATH=$PYTHONPATH:/app
 
-gunicorn portfolio_app.wsgi:application
+# Start Gunicorn with the PORT environment variable that Render provides
+gunicorn portfolio_app.wsgi:application --bind 0.0.0.0:$PORT
