@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1',]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -181,9 +181,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Security settings for production
 if not DEBUG:
-    # Only allow your site
-    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
-
     # HTTPS enforcement
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
