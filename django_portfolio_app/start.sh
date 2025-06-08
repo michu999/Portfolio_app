@@ -1,16 +1,6 @@
 #!/bin/bash
+cd /usr/local/Python/Projects/portfolio_app
 
-# Navigate to the correct directory
-cd /opt/render/project/src
+export PYTHONPATH=$PYTHONPATH:/usr/local/Python/Projects/portfolio_app/django_portfolio_app
 
-# Add the current directory to Python path
-export PYTHONPATH=$PYTHONPATH:/opt/render/project/src
-
-# Check directory structure (for debugging)
-ls -la
-
-# Try to find where your Django project is located
-find . -name "wsgi.py" -type f
-
-# Start Gunicorn with the correct WSGI path
-exec gunicorn django_portfolio_app.portfolio_app.wsgi:application
+gunicorn portfolio_app.wsgi:application
