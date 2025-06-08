@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from accounts.models import CustomUser
+from .models import CustomUser
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileEditForm
 
